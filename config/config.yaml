@@ -1,0 +1,31 @@
+pipeline:
+  name: "top_10_clientes"
+  top_n: 10
+
+catalogo:
+  clientes_bronze:
+    path: "data/input/dataset-json-clientes/data/clientes.json.gz"
+    format: "json"
+    options:
+      lines: true
+
+  pedidos_bronze:
+    path: "data/input/datasets-csv-pedidos/data/pedidos"
+    format: "csv"
+    options:
+      separator: ";"
+      glob_pattern: "pedidos-*.csv.gz"
+
+  top_10_clientes:
+    path: "data/output/top_10_clientes"
+    format: "csv"
+    options:
+      separator: ";"
+
+datasets:
+  clientes:
+    repo_url: "https://github.com/infobarbosa/dataset-json-clientes"
+    local_path: "data/input/dataset-json-clientes"
+  pedidos:
+    repo_url: "https://github.com/infobarbosa/datasets-csv-pedidos"
+    local_path: "data/input/datasets-csv-pedidos"
