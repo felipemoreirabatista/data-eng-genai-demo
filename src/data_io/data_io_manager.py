@@ -1,6 +1,7 @@
 """Módulo de I/O de dados com Strategy Pattern."""
 
 import glob
+import gzip
 import logging
 import os
 from typing import Any, Dict
@@ -71,12 +72,15 @@ class DataIOManager:
         return output_file
 
     def _read_json(self, path: str, options: Dict[str, Any]) -> pd.DataFrame:
-        """Lê um arquivo JSON / JSON Lines."""
+        """Lê um arquivo JSON / JSON Lines (suporta .gz)."""
         if not os.path.exists(path):
             raise DataIOError(f"Arquivo não encontrado: {path}")
 
         lines = options.get("lines", False)
         try:
+            if path.endswith(".gz"):
+                with gzip.open(path, "rt", encoding="utf-8") as f:
+                    return pd.read_json(f, lines=lines)
             return pd.read_json(path, lines=lines)
         except Exception as e:
             raise DataIOError(f"Erro ao ler JSON '{path}': {e}")
