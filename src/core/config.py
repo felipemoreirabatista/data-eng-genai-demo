@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import yaml
 
@@ -9,7 +9,7 @@ from src.core.exceptions import ConfigNotFoundError
 class ConfigLoader:
     """Loads and parses the application configuration from config.yaml."""
 
-    def __init__(self, config_path: str | None = None) -> None:
+    def __init__(self, config_path: Optional[str] = None) -> None:
         if config_path is None:
             project_root = Path(__file__).resolve().parent.parent.parent
             config_path = str(project_root / "config" / "config.yaml")

@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Optional
 
 from pyspark.sql import SparkSession
 
@@ -9,7 +9,7 @@ class SparkManager:
     def __init__(self, spark_config: Dict[str, str]) -> None:
         self._app_name = spark_config.get("app_name", "SparkApp")
         self._master = spark_config.get("master", "local[*]")
-        self._session: SparkSession | None = None
+        self._session: Optional[SparkSession] = None
 
     def create_session(self) -> SparkSession:
         """Creates and returns a new SparkSession."""
